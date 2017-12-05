@@ -1,0 +1,15 @@
+{
+  "name": "stripe-lambda",
+  "version": "1.0.0",
+  "description": "A processing app for Stripe transactions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stvnrlly",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "aws-sdk": "^2.163.0",
+    "dotenv": "^4.0.0"
+  }
+}
