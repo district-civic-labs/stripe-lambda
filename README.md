@@ -24,7 +24,17 @@ export STRIPE_SECRET_KEY=your_secret_key
 
 1. Put the code into the function
 
-1. Something with API Gateway?
+1. Something with API Gateway? Make a note of the URL you receive for later
+
+## Integration on another site
+
+You can start with the [template form](./template-form.html) in this repo. You can see this form in action over on districtciviclabs.org.
+
+1. Swap out `PUBLIC_TEST_KEY` and `PUBLIC_LIVE_KEY` with their respective public keys
+
+1. Swap out `API_GATEWAY_URL` with your API Gateway URL from above.
+
+1. Edit the name and description in the handler, if appropriate.
 
 ## License
 
