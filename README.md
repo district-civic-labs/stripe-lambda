@@ -14,19 +14,28 @@ export STRIPE_SECRET_KEY=your_secret_key
 
 ## Deployment
 
-1. Create a new AWS Lambda function
-
 1. Make sure that you have your Stripe account set up
+
+1. Using the [AWS CLI](https://aws.amazon.com/cli/), upload `stripe-lambda.zip`:
+
+```bash
+aws lambda create-function \\
+--region YOUR-REGION \\
+--function-name YOUR-FUNCTION-NAME \\
+--zip-file fileb://./stripe-lambda.zip \\
+--handler index.handler \\
+--runtime nodejs6.10 \\
+--profile default \\
+--role arn:aws:iam::1234567:role/YOUR-EXECUTION-ROLE
+```
 
 1. Copy your Stripe secret key to the function's environment as `STRIPE_SECRET_KEY`
 
 1. Copy your Stripe test secret key to the function's environment as `TEST_SECRET_KEY`
 
-1. Put the code into the function
-
 1. Increase the function's allotted running time from 3 seconds to 5 seconds
 
-1. Something with API Gateway? Make a note of the URL you receive for later
+1. Add an API Gateway trigger, and set its security to "Open"
 
 ## Integration on another site
 
