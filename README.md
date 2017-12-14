@@ -24,6 +24,8 @@ export STRIPE_SECRET_KEY=your_secret_key
 
 1. Put the code into the function
 
+1. Increase the function's allotted running time from 3 seconds to 5 seconds
+
 1. Something with API Gateway? Make a note of the URL you receive for later
 
 ## Integration on another site
