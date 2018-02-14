@@ -1,0 +1,42 @@
+'use strict';
+
+function getText(amount) {
+  const text = `
+  Thank you for your donation of $${amount.toString().slice(0,-2)}.00 to our organization!
+
+  Cool Org Inc is a 501(c)(3) non-profit
+  corporation, with an IRS EIN of 12-3456789. This letter certifies that you
+  received no goods or services for your donation.
+
+  We sincerely appreciate your support,
+
+  A Person
+  Treasurer, Cool Org Inc
+
+  Another Person
+  President, Cool Org Inc
+  `;
+
+  return text;
+}
+
+function getHtml(amount) {
+  const html = `
+  <img src="https://districtciviclabs.org/assets/img/logo.svg" height="50">
+  <p>Thank you for your donation of $${amount.toString().slice(0,-2)}.00 to our organization!</p>
+  <p>Cool Org Inc is a 501(c)(3) non-profit
+  corporation, with an IRS EIN of 12-3456789. This letter certifies that you
+  received no goods or services for your donation.</p>
+  <p>We sincerely appreciate your support,</p>
+  <div>A Person</div>
+  <div>Treasurer, Cool Org Inc</div>
+  <br />
+  <div>Another Person</div>
+  <div>President, Cool Org Inc</div>
+  `;
+
+  return html;
+}
+
+exports.getText = getText;
+exports.getHtml = getHtml;

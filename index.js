@@ -1,12 +1,45 @@
+'use strict';
 require('dotenv').load();
+try {
+  var emailBody = require('./emailBody');
+} catch (e) {
+  console.log('no email text module');
+}
 
 const AWS = require('aws-sdk');
+const nodemailer = require('nodemailer');
 let encrypted;
 let decrypted;
 
+function sendReceipt(toEmail, amount) {
+  let transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_URL,
+    port: 587,
+    secure: false, // upgrade later with STARTTLS
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    debug: true
+  });
+
+  let text = emailBody.getText(amount);
+  let html = emailBody.getHtml(amount);
+
+  let message = {
+    from: process.env.EMAIL_USER,
+    to: toEmail,
+    subject: 'Thank you for your donation!',
+    text: text,
+    html: html
+  };
+
+  transporter.sendMail(message);
+}
+
 function processEvent(event, context, callback) {
     const stripe = require('stripe')(decrypted);
-    body = event;
+    var body = event;
 
     stripe.charges.create({
         amount:        body.amount,
@@ -17,15 +50,18 @@ function processEvent(event, context, callback) {
     }, function(err, charge) {
         var message;
         var chargeSuccess;
-        if (err && err.type == 'card_error') {
+        if (err && err.type === 'card_error') {
             message = 'Something went wrong with that card. Please check the information you entered.';
             chargeSuccess = false;
         } else if (err) {
-            message = 'Something went wrong. Maybe try again later';
+            message = 'Sorry, something went wrong. Maybe try again later';
             chargeSuccess = false;
         } else {
             message = 'Donation successful! Check your email shortly for a receipt.';
             chargeSuccess = true;
+            if (typeof emailBody !== 'undefined') {
+              sendReceipt(body.email, body.amount);
+            }
         }
         let response = {
             statusCode: 200,
@@ -39,7 +75,7 @@ function processEvent(event, context, callback) {
                 'Access-Control-Allow-Methods': 'POST,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             }
-        }
+        };
 
         console.log(response);
         callback(null, response);

@@ -47,6 +47,18 @@ You can start with the [template form](./template-form.html) in this repo. You c
 
 1. Edit the name and description in the handler, if appropriate.
 
+## Sending receipts
+
+It's possible to send a receipt via IMAP.
+
+1. Add an `emailBody.js` file that exports two functions: `getText` and `getHtml`. See `emailBody.js.example` for, well, an example.
+
+1. Set `EMAIL_URL` in the function's environment with your IMAP provider.
+
+1. Set `EMAIL_USER` in the function's environment with the login for the sending account.
+
+1. Set `EMAIL_PASS` in the function's environment with the password for the sending account.
+
 ## License
 
 Copyright is waived under a [CC0-1.0 waiver](LICENSE.md).
